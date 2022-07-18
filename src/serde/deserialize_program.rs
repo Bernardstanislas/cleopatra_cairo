@@ -222,7 +222,7 @@ pub fn deserialize_program_json(path: &Path) -> Result<ProgramJson, ProgramError
 pub fn deserialize_program(path: &Path, entrypoint: &str) -> Result<Program, ProgramError> {
     let program_json: ProgramJson = deserialize_program_json(path)?;
 
-    let main_pc = match program_json
+    let entrypoint_pc = match program_json
         .identifiers
         .get(&format!("__main__.{}", entrypoint))
     {
@@ -233,7 +233,7 @@ pub fn deserialize_program(path: &Path, entrypoint: &str) -> Result<Program, Pro
         builtins: program_json.builtins,
         prime: program_json.prime,
         data: program_json.data,
-        main: main_pc,
+        main: entrypoint_pc,
         hints: program_json.hints,
         reference_manager: program_json.reference_manager,
     })
