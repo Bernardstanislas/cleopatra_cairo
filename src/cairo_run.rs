@@ -113,6 +113,8 @@ fn encode_relocated_memory(memory_bytes: &mut Vec<u8>, addr: usize, memory_cell:
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::bigint;
+    use num_traits::FromPrimitive;
     use std::io::Read;
 
     fn run_test_program(program_path: &Path) -> Result<CairoRunner, CairoRunError> {
@@ -135,6 +137,24 @@ mod tests {
         assert!(cairo_runner.run_until_pc(end).is_ok());
 
         Ok(cairo_runner)
+    }
+
+    #[test]
+    fn cairo_run_custom_entry_point() {
+        let program_path = Path::new("cairo_programs/not_main.json");
+        let program = Program::new(program_path, "not_main").unwrap();
+
+        let mut cairo_runner = CairoRunner::new(&program);
+        cairo_runner.initialize_segments(None);
+
+        let end = cairo_runner.initialize_main_entrypoint().unwrap();
+
+        assert!(cairo_runner.initialize_vm().is_ok());
+        assert!(cairo_runner.run_until_pc(end).is_ok());
+        assert!(cairo_runner.relocate().is_ok());
+        // `main` returns without doing nothing, but `not_main` sets `[ap]` to `1`
+        // Memory location was found empirically and simply hardcoded
+        assert_eq!(cairo_runner.relocated_memory[2], Some(bigint!(123)));
     }
 
     fn compare_files(file_path_1: &Path, file_path_2: &Path) -> io::Result<()> {
