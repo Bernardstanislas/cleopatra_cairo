@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":[["MaybeRelocatable",""]],"fn":[["relocate_value","Turns a MaybeRelocatable into a BigInt value If the value is an Int, it will extract the BigInt value from it If the value is Relocatable, it will relocate it using the relocation_table"]],"struct":[["Relocatable",""]]};

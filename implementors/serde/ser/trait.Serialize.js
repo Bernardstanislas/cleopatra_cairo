@@ -1,0 +1,3 @@
+(function() {var implementors = {
+"cairo_rs":[["impl <a class=\"trait\" href=\"https://docs.rs/serde/1.0.140/serde/ser/trait.Serialize.html\" title=\"trait serde::ser::Serialize\">Serialize</a> for <a class=\"struct\" href=\"cairo_rs/vm/trace/trace_entry/struct.RelocatedTraceEntry.html\" title=\"struct cairo_rs::vm::trace::trace_entry::RelocatedTraceEntry\">RelocatedTraceEntry</a>"]]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
